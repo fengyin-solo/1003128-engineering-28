@@ -1,18 +1,27 @@
-"""内存数据仓库：给每个业务模块准备一份可筛选、可流转的示例数据。
+"""内存数据仓库：保存示例数据并给运营概览提供统计。
 
-真实项目里这里会换成数据库访问层；当前实现只依赖标准库，保证克隆下来就能起。
+示例数据不在代码里写死：进程启动时由 app.seed_loader 按清单
+（seed/manifest.yaml）装载进来，这里只负责保存与查询。真实项目里这里会
+换成数据库访问层；当前实现只依赖标准库，保证克隆下来就能起。
 """
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from app.seed import SEED_ROWS
+if TYPE_CHECKING:
+    from app.seed_loader import LoadReport
 
 
 class Store:
     def __init__(self) -> None:
-        self._tables: dict[str, list[dict[str, Any]]] = {
-            name: [dict(row) for row in rows] for name, rows in SEED_ROWS.items()
+        self._tables: dict[str, list[dict[str, Any]]] = {}
+        # 最近一次装载的结果（来源、条数、是否回退），由 seed_loader 写入
+        self.seed_report: LoadReport | None = None
+
+    def load(self, tables: dict[str, list[dict[str, Any]]]) -> None:
+        """整体替换内存表。调用方保证 tables 已通过校验，替换本身一步到位。"""
+        self._tables = {
+            name: [dict(row) for row in rows] for name, rows in tables.items()
         }
 
     def module_names(self) -> list[str]:

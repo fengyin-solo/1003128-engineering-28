@@ -5,6 +5,8 @@ services:
       - "8000:8000"
     environment:
       - APP_ENV=local
+      # 数据量开关：各环境只允许改这个数，结构由同一份清单保证一致
+      - SEED_SCALE=1
   frontend:
     build: ./frontend
     ports:
