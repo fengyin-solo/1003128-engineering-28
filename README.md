@@ -15,11 +15,28 @@
 │   ├── src/stores/           会话与筛选状态
 │   └── vite.config.ts        dev server 配置（open: false）
 ├── backend/                  FastAPI（Python） 后端
-│   ├── app/routers/          每个业务模块一组接口
-│   ├── app/services/         业务规则与状态流转
-│   └── app/store.py          内存数据仓库与示例数据
+│   ├── app/routers/          每个业务模块一组接口（LIST_FIELDS/STATUSES 即表结构）
+│   ├── app/services/         业务规则与状态流转（REQUIRED_FIELDS/STATUS_ORDER）
+│   ├── app/seed_loader.py    初始化清单的装载、校验与快照
+│   ├── app/store.py          内存数据仓库（启动时按清单整体装载）
+│   ├── data/seed_manifest.json  初始化数据清单（按模块声明字段与初始记录）
+│   └── tests/                清单装载与概览同源的回归测试
+├── docs/seed.md              初始化数据工程：清单格式、初始化顺序、加模块/改字段流程
 ├── .gitignore
 └── docker-compose.yml
+```
+
+## 初始化数据
+
+启动时不再依赖写死在代码里的示例数据，而是按 `backend/data/seed_manifest.json`
+这份清单装载：每张表声明字段与初始记录，缺模块或字段对不上会**在启动阶段直接失败
+并指出是哪一张表**，绝不静默跳过；本地开发、构建镜像和部署读同一份清单，环境之间
+只允许数据量不同（`SEED_RECORDS_DIR`），结构必须一致。完整说明（清单格式、初始化
+顺序、依赖、故障恢复、加模块/改字段步骤）见 **[docs/seed.md](docs/seed.md)**。
+
+```bash
+make seed-check   # 改完清单先校验；run.sh 与 Docker 构建时也会自动执行
+make test         # 跑装载/概览同源回归测试
 ```
 
 ## 启动
@@ -74,5 +91,7 @@ npm run dev
 
 - 每个模块的前端页面在 `frontend/src/views/<模块>/index.vue`，后端接口在
   `backend/app/routers/<模块>.py`，业务规则在 `backend/app/services/<模块>.py`。
+- 初始数据统一在 `backend/data/seed_manifest.json` 按模块声明，改字段或加模块后
+  先跑 `make seed-check`；流程见 [docs/seed.md](docs/seed.md)。
 - 列表接口统一返回 `{ items, total, page, size }`，动作接口统一返回 `{ ok, message }`。
 - 状态流转只允许在 `app/services` 里改，路由层不做业务判断。

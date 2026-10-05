@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/dust", tags=["粉尘防治"])
 
 service = DustService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["测点编号", "所在区域", "粉尘浓度", "游离二氧化硅", "降尘措施", "降尘效率", "监测日期", "测点状态"]
 STATUSES = ["达标", "接近限值", "超标", "已治理"]
 

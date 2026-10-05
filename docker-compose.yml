@@ -5,6 +5,13 @@ services:
       - "8000:8000"
     environment:
       - APP_ENV=local
+      # 环境间只允许数据量不同：挂载一份只含 <模块名>.json 记录文件的目录，
+      # 结构仍按 data/seed_manifest.json 与代码注册表校验，对不上启动直接失败。
+      # - SEED_RECORDS_DIR=/srv/app/data/records-env
+      # 清单损坏时是否退回上一次成功装载的快照（默认关闭，坏清单必须启动失败）：
+      # - SEED_FALLBACK_SNAPSHOT=1
+    # volumes:
+    #   - ./seed-records:/srv/app/data/records-env:ro
   frontend:
     build: ./frontend
     ports:

@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/fireprevent", tags=["防灭火"])
 
 service = FirepreventService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["监测编号", "所在区域", "束管监测", "标志气体", "温度异常", "注浆量", "注氮量", "防火状态"]
 STATUSES = ["正常", "指标异常", "高温预警", "已处置"]
 

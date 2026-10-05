@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/power", tags=["供电系统"])
 
 service = PowerService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["设备编号", "设备类型", "电压等级", "所属区域", "运行负荷", "绝缘电阻", "上次试验", "设备状态"]
 STATUSES = ["正常", "负荷过高", "绝缘降低", "已修复"]
 

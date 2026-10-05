@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/roof", tags=["顶板管理"])
 
 service = RoofService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["监测编号", "所在工作面", "离层量", "锚杆受力", "收敛变形", "监测日期", "监测人员", "顶板状态"]
 STATUSES = ["稳定", "离层预警", "变形超标", "已加固"]
 

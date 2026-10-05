@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/belt", tags=["皮带运输"])
 
 service = BeltService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["皮带编号", "所属巷道", "运输长度", "带速", "运量", "保护装置", "巡检日期", "皮带状态"]
 STATUSES = ["正常", "保护失效", "撕裂", "已修复"]
 

@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/gas", tags=["瓦斯监测"])
 
 service = GasService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["测点编号", "所在区域", "瓦斯浓度", "一氧化碳浓度", "温度", "风速", "监测时刻", "测点状态"]
 STATUSES = ["正常", "浓度偏高", "超限报警", "已处置"]
 

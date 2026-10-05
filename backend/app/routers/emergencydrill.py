@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/emergencydrill", tags=["应急演练"])
 
 service = EmergencydrillService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["演练编号", "演练主题", "演练区域", "参演人数", "演练日期", "演练评估", "改进措施", "演练状态"]
 STATUSES = ["待组织", "已组织", "已完成", "已复盘"]
 

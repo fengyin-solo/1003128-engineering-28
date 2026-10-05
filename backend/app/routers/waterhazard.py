@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/waterhazard", tags=["水害防治"])
 
 service = WaterhazardService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["监测编号", "所在区域", "涌水量", "水压", "水温", "水质类型", "排水能力", "水害状态"]
 STATUSES = ["正常", "涌水增加", "突水危险", "已控制"]
 

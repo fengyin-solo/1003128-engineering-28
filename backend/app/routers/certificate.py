@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/certificate", tags=["持证管理"])
 
 service = CertificateService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["人员编号", "姓名", "证书类别", "证书编号", "发证日期", "到期日期", "复训记录", "证书状态"]
 STATUSES = ["持证有效", "即将到期", "已过期", "已注销"]
 

@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/ventilation", tags=["通风系统"])
 
 service = VentilationService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["设备编号", "设备类型", "额定风量", "运行频率", "电流值", "所属巷道", "上次检修", "设备状态"]
 STATUSES = ["正常", "降频运行", "故障停机", "已更换"]
 

@@ -1,19 +1,27 @@
-"""内存数据仓库：给每个业务模块准备一份可筛选、可流转的示例数据。
+"""内存数据仓库：保存按初始化清单装载的各业务模块数据。
 
 真实项目里这里会换成数据库访问层；当前实现只依赖标准库，保证克隆下来就能起。
+数据不在此模块构造，进程启动时由 ``app.seed_loader.bootstrap`` 校验清单后整体
+换入（``replace_tables``）：清单有问题时启动直接失败，绝不会出现半张表的数据。
 """
 from __future__ import annotations
 
+import copy
 from typing import Any
-
-from app.seed import SEED_ROWS
 
 
 class Store:
     def __init__(self) -> None:
-        self._tables: dict[str, list[dict[str, Any]]] = {
-            name: [dict(row) for row in rows] for name, rows in SEED_ROWS.items()
-        }
+        self._tables: dict[str, list[dict[str, Any]]] = {}
+        # 由 bootstrap 在成功装载后写入：manifest（清单）或 snapshot（上一次成功快照）。
+        self.loaded_from: str = "unloaded"
+
+    def is_loaded(self) -> bool:
+        return self.loaded_from != "unloaded"
+
+    def replace_tables(self, tables: dict[str, list[dict[str, Any]]]) -> None:
+        """整体换入一套已校验通过的表数据（深拷贝，事务式：失败就不调用本方法）。"""
+        self._tables = {name: copy.deepcopy(rows) for name, rows in tables.items()}
 
     def module_names(self) -> list[str]:
         return sorted(self._tables)

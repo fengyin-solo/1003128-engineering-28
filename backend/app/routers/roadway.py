@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/roadway", tags=["巷道维修"])
 
 service = RoadwayService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["任务编号", "维修巷道", "维修内容", "施工队伍", "开工日期", "竣工日期", "验收人员", "任务状态"]
 STATUSES = ["待派发", "施工中", "待验收", "已竣工"]
 

@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/monitorstation", tags=["监测分站"])
 
 service = MonitorstationService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["分站编号", "分站名称", "所在位置", "通信地址", "接入传感器", "信号强度", "后备电源", "分站状态"]
 STATUSES = ["正常运行", "通信中断", "备用供电", "已停用"]
 

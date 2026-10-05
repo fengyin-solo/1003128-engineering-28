@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/explosive", tags=["爆破管理"])
 
 service = ExplosiveService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["爆破编号", "爆破区域", "炸药用量", "雷管用量", "爆破时间", "警戒范围", "爆破人员", "爆破状态"]
 STATUSES = ["待审批", "已审批", "已爆破", "已检查"]
 

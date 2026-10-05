@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/rescue", tags=["应急救援"])
 
 service = RescueService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["装备编号", "装备名称", "装备类别", "存放地点", "保有数量", "上次检查", "下次检查日", "装备状态"]
 STATUSES = ["合格可用", "需补充", "已过期", "已报废"]
 

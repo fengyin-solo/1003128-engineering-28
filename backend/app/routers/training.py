@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/training", tags=["安全培训"])
 
 service = TrainingService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["培训编号", "培训主题", "培训对象", "培训日期", "培训讲师", "考核方式", "考核结果", "培训状态"]
 STATUSES = ["待培训", "培训中", "已考核", "已归档"]
 

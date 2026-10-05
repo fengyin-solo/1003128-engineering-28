@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/personnel", tags=["人员定位"])
 
 service = PersonnelService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["终端编号", "携带人员", "所在位置", "入井时刻", "区域停留", "定位精度", "信号强度", "终端状态"]
 STATUSES = ["在线", "离线", "低电量", "已更换"]
 

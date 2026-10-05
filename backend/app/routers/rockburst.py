@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/rockburst", tags=["冲击地压"])
 
 service = RockburstService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["监测编号", "所在区域", "微震能量", "微震频次", "应力值", "预警等级", "处置措施", "监测状态"]
 STATUSES = ["正常", "应力集中", "预警", "已解危"]
 

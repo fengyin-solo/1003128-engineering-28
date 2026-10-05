@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/hoist", tags=["提升系统"])
 
 service = HoistService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["提升机编号", "提升类型", "提升高度", "额定载荷", "钢丝绳直径", "上次探伤", "制动系统", "提升状态"]
 STATUSES = ["正常", "钢丝绳磨损", "制动异常", "检修中"]
 

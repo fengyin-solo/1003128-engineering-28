@@ -12,6 +12,8 @@ router = APIRouter(prefix="/api/shift", tags=["入井管理"])
 
 service = ShiftService()
 
+# LIST_FIELDS 是本表结构注册表：必须与 data/seed_manifest.json 中该表的 fields
+# 以及 service 的 REQUIRED_FIELDS 对齐，改动后启动校验会直接失败。
 LIST_FIELDS = ["记录编号", "入井人员", "所属班组", "入井时间", "升井时间", "携带设备", "出勤区域", "入井状态"]
 STATUSES = ["入井中", "已升井", "超时未升", "已联系"]
 
